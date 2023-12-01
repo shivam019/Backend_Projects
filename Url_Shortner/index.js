@@ -39,6 +39,8 @@ app.set("views", path.resolve("./views"));
 //DB Connection:>
 mongoose.connect("mongodb://localhost:27017/short-url").then(()=> {
     console.log("Connected to MongoDB");
+    console.log("Connected to MongoDB");
+
 })
 
 
