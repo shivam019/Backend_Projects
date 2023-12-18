@@ -18,6 +18,7 @@ router.post("/login", (req, res) => {
     const { email, password } = req.body;
 
     if (email === "123" && password === "123") {
+
         session=req.session;
         req.session.userid = email;
          console.log(req.session)
@@ -29,7 +30,10 @@ router.post("/login", (req, res) => {
 
 router.get('/logout',(req,res) => {
     req.session.destroy();
+    res.clearCookie('connect.sid');
+
     res.redirect('/login');
 });
+
 
 module.exports = router;
