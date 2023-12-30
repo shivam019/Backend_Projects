@@ -1,27 +1,16 @@
-const express = require("express");
-const app = express();
-const path = require("path");
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const routes = require('./routes/users');
+function Shopping_cart(a, payment_gateway) {
+    
+    //if button clicked --- go to payment gateway
 
-const oneDay = 1000 * 60 * 60 * 24;
+    payment_gateway(a);  //6
 
-app.use(session({
-    secret: "SHIVAM_ASATI",
-    saveUninitialized: true,
-    cookie: { maxAge: oneDay },
-    resave: false
-}));
+    // payment done 
 
-app.set("view engine", "ejs");
-app.set("views", path.resolve("./views"));
+}
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+function payment_gateway(data) {
+    console.log(`Payment successful. Amount: ${data}`);  //13
+}
 
-app.use('/', routes);
+ Shopping_cart(500, payment_gateway);
 
-const PORT = 8080;
-
-app.listen(PORT, () => console.log(`Server Started at ${PORT}`));

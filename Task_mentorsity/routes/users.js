@@ -14,14 +14,13 @@ router.post("/signup", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-    console.log(res.body);
     const { email, password } = req.body;
 
+     console.log(email, password);
     if (email === "123" && password === "123") {
 
         session=req.session;
         req.session.userid = email;
-         console.log(req.session)
         res.render("Dashboard"); 
     } else {
         res.render("login", { error: "Invalid email or password" });
