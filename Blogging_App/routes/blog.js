@@ -4,7 +4,9 @@ const {Router} = require("express")
 const router = Router();
 const multer = require('multer');
 const path = require('path')
-const Blog = require('../models/Blog')
+const Blog = require('../models/Blog');
+const Comment = require('../models/comments');
+const { findById } = require("../models/user");
 
 
 //Configuration for Multer to store the Blog Image in the /public/uploads/:id path
@@ -48,5 +50,23 @@ router.post("/", upload.single("coverImage"),  async(req,res)=> {
     return res.redirect(`/blog/${blog._id}`);
 
     
+})
+
+router.get("/:id", async(req,res)=> {
+    const blog = await Blog.findById(req.params.id).populate("createdBy");
+    console.log(blog);
+    return res.render('blog', {
+        user: req.user,
+        blog,
+    })
+})
+
+//Comments::
+router.post("/comment/:blogId", async(req,res)=> {
+const comment = await Comment.create({
+     content: req.body.content,
+     blogId: req.params.blogId,
+     createdBy: req.user.id,
+})
 })
 module.exports = router;

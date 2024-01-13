@@ -9,18 +9,22 @@
 
     <!-- <%= JSON.stringify(blogs) %> -->
 
-    <div class="container" mt-3>
+    <div class="container mt-3">
+      <div class=" row row-cols-4">
       <% blogs.forEach(blog => { %>
-        <div class="card" style="width: 18rem;">
+        <div class="col">
+        <div class="card col" style="width: 18rem; height: 22rem">
           <img class="card-img-top" src="<%= blog.coverImageURL %>">
           <div class="card-body">
 
 
             <h5 class="card-title"><%= blog.title %></h5>
-            <p class="card-text"><%= blog.body %></p>
+            <!-- <p class="card-text"><%= blog.body %></p> -->
             <a href="/blog/<%= blog._id%>" class="btn btn-primary">Read More..</a>
           </div>
         </div>
+      </div>
+
       <% }) %>
 
 
