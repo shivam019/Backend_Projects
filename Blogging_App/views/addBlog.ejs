@@ -1,14 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('./partials/head') %>
- <title> Add New Blog</title>
-  </head>
-  <body>
-    <%- include('./partials/nav') %>
+<head>
+  <%- include('./partials/head') %>
 
+</head>
+<body>
+
+  <%- include('./partials/nav') %>
+
+
+<div class="container mt-4">
+  <h2>Create a New Blog Post</h2>
+  
+  <form action="/blog" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="image" class="form-label">Choose an Image</label>
+      <input type="file"
+       class="form-control-file" 
+       id="coverImage"
+        name="coverImage">
+    </div>
     
-    <%- include('./partials/script') %>
+    <div class="mb-3">
+      <label for="title" class="form-label">Blog Title</label>
+      <input type="text" 
+      class="form-control"
+       id="title" 
+       name="title" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="content" class="form-label">Blog Content</label>
+      <textarea class="form-control" 
+      id="body"
+       name="body" 
+       rows="10" required></textarea>
+    </div>
+    
+   
+        <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
 
-  </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<%- include('./partials/script') %>
+
+</body>
 </html>

@@ -3,8 +3,12 @@ const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
 const PORT = 8000;
+const Blog = require('./models/Blog')
 const cookieParser = require('cookie-parser')
 const {checkForAuthenticationCookie} = require("./middlewares/authentication")
+
+//Serve data inside public folder statically
+app.use(express.static(path.resolve('./public')))
 
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -25,9 +29,12 @@ app.use('/blog', BlogRoute)
 app.set('view engine', 'ejs');
 app.set("views", path.resolve("./views"))
 
-app.get('/', (req,res)=> {
+app.get('/', async(req,res)=> {
+    const allBlogs = await Blog.find({}).sort("createdAt");
+
     res.render('home', {
         user: req.user,
+        blogs: allBlogs,
     }); 
 } )
 

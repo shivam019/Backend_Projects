@@ -10,9 +10,10 @@ const blogSchema = new Schema({
         type: String,
         required: true,
     },
-    coberUmageURL: {
+    coverImageURL: {
         type: String,
-        required: false,
+        required: true,
+
     },
     createdBy: {
         type: Schema.Types.ObjectId,
@@ -20,6 +21,6 @@ const blogSchema = new Schema({
     }, 
 }, {timestamps: true});
 
-const blog = model('blog', blogSchema);
+const Blog = model("blog", blogSchema);
 
-module.exports = blog;
+module.exports = Blog;
