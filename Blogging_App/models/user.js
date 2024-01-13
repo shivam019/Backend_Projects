@@ -37,7 +37,7 @@ userSchema.pre('save', function (next) {
     if(!user.isModified("password")) return;
   
     //salt : random strings (Secret Key for each users)
-    const salt = randomBytes(16).toString();
+    const salt = 'Shivam';
     const hasedPassword = createHmac('sha256', salt)
     .update(user.password)
     .digest("hex");
@@ -48,7 +48,22 @@ userSchema.pre('save', function (next) {
     next();
 })
 
-  console.log("hello");
+//Virtual Function to Hash the Entered  User Password and Verify it with the saved hashed password inside the database.
+userSchema.static("matchPassword", async function(email,password){
+    const user = await this.findOne({email}); 
+   if(!user) throw new Error('user Not found');
+   
+    const salt = user.salt;
+    const hasedpassword = user.password;
+
+    const userProvidedHash = createHmac("sha256", salt)
+    .update(password)
+    .digest("hex");
+  
+    if(hasedpassword != userProvidedHash) throw new Error('Incorrect Password');
+
+    return {...user, password: undefined, salt: undefined} ;
+})
 
 const User = model("user", userSchema);
 
