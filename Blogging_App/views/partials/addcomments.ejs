@@ -1,0 +1,11 @@
+<div class="container mt-5">
+    <h2>Comments</h2>
+
+    <form id="commentForm" action="/blog/comment/<%= blog._id %>" method="post">
+        <div class="form-group">
+            <label for="commentInput">Add a Comment:</label>
+            <textarea class="form-control" name="content" id="content" rows="2" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
+</div>

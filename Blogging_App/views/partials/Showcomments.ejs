@@ -1,0 +1,31 @@
+<section style="background-color: #e7effd;">
+  <div class="container my-5 py-5 text-dark">
+      <div class="row d-flex justify-content-center">
+          <div class="col-md-11 col-lg-9 col-xl-7">
+
+              <% comments.forEach(comments => { %>
+
+                  <div class="d-flex flex-start mb-4">
+                      <img class="rounded-circle shadow-1-strong me-3" src="<%= comments.createdBy.profileImageURL %>" alt="avatar" width="65" height="65" />
+                      <div class="card w-100">
+                          <div class="card-body p-4">
+                              <div class="">
+                                  <h5><%= comments.createdBy.username %></h5>
+                                  <p class="small"><%= comments.timestamp %></p>
+                                  <p><%= comments.content %></p>
+
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <a href="#!" class="link-muted"><i class="fas fa-reply me-1"></i> Reply</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+              <% }); %>
+              <!-- End EJS Loop -->
+
+          </div>
+      </div>
+  </div>
+</section>

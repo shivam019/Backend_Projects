@@ -3,7 +3,7 @@ const {Schema, model} = require("mongoose")
 const commentSchema = new Schema({
     content: {
         type: String,
-        required: trusted,
+        required: true,
     },
 
     createdBy: {
