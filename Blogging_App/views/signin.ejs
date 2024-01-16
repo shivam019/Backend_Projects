@@ -24,6 +24,11 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
 
+          <% if (locals.user) { %>
+            <a href="/auth/google" class="btn btn-danger">Login with Google</a>
+
+          <% } %>
+
     </div>
     <%- include('./partials/script') %>
 
