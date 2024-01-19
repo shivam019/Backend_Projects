@@ -29,6 +29,12 @@ const userSchema = new Schema({
     enum: ["USER", "ADMIN"],
     default: "USER",
    },
+   otp: {
+    type: String,
+},
+otpExpiry: {
+   type: Date,
+},
 
 }, {timestamps: true}
 )
