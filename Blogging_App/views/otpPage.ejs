@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+ <title> OTP VERIFICATION PAGE </title>
+  </head>
+  <body>
+
+
+
+    <h2>Enter 6-digit OTP</h2>
+    <form action="/user/verify-otp" method="post">
+      <label for="otp">OTP:</label>
+      <input type="text" id="otp" name="otp" maxlength="6" required>
+      <button type="submit">Submit OTP</button>
+    </form>
+  </body>
+
+    <%- include('./partials/script') %>
+
+
+  </body>
+</html>

@@ -29,6 +29,7 @@ const userSchema = new Schema({
     enum: ["USER", "ADMIN"],
     default: "USER",
    },
+
    otp: {
     type: String,
 },
@@ -69,8 +70,8 @@ userSchema.static("matchPasswordAndGenerateToken", async function(email,password
   
     if(hasedpassword != userProvidedHash) throw new Error('Incorrect Password');
 
-    const token = createTokenForUser(user);
-    return token;
+    // const token = createTokenForUser(user);
+    return user;
 
 })
 
