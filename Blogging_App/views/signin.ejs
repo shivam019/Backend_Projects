@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <%- include('./partials/head') %>
- <title> HomePage</title>
+ <title> Login Page | Blogify</title>
   </head>
   <body>
     <%- include('./partials/nav') %>
@@ -24,12 +24,11 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
 
-          <% if (locals.user) { %>
-            <a href="/auth/google" class="btn btn-danger">Login with Google</a>
-
-          <% } %>
 
     </div>
+
+    <%- include('./partials/googlebtn') %>
+    
     <%- include('./partials/script') %>
 
   </body>

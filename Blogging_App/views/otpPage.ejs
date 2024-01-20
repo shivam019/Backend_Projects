@@ -6,11 +6,15 @@
   </head>
   <body>
 
-
+  
+    <%= locals.user._id %>
 
     <h2>Enter 6-digit OTP</h2>
     <form action="/user/verify-otp" method="post">
       <label for="otp">OTP:</label>
+      <input type="hidden" name="userId" value="<%= user._id %>">
+      <input type="hidden" name="email" value="<%= user.email %>">
+
       <input type="text" id="otp" name="otp" maxlength="6" required>
       <button type="submit">Submit OTP</button>
     </form>

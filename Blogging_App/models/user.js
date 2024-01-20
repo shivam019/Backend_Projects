@@ -18,7 +18,8 @@ const userSchema = new Schema({
    },
    password: {
     type: String,
-    required: true,
+    required: false,
+    
    },
    profileImageURL: {
     type: String,
@@ -35,6 +36,11 @@ const userSchema = new Schema({
 },
 otpExpiry: {
    type: Date,
+},
+googleId: {
+    type: String,
+    unique: true,
+    sparse: true, // Allows null values for unique fields, useful if not every user has a Google ID
 },
 
 }, {timestamps: true}

@@ -10,22 +10,37 @@ const nodemailer = require('nodemailer')
 const cookieParser = require('cookie-parser')
 const {checkForAuthenticationCookie} = require("./middlewares/authentication")
 const User = require('./models/user')
-//Generate Otp packgae
+const passport = require('passport');
 const otpGenerator = require('otp-generator')
+const session = require('express-session');
 
 
-
-
-//Serve data inside public folder statically
+//Serve data inside public folder statically 
 app.use(express.static(path.resolve('./public')))
 
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie("token"));
 
+
+app.use(session({
+    secret: process.env.secret,
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+
+app.use(passport.session());
+
 mongoose
 .connect(process.env.MONGO_URL)
 .then( ()=> console.log("MongoDB Connected"));
+
+
+
+
+ 
 
 const UserRoute = require("./routes/user");
 const BlogRoute = require("./routes/blog");
@@ -35,7 +50,7 @@ app.use('/blog', BlogRoute)
 app.set('view engine', 'ejs');
 app.set("views", path.resolve("./views"))
 
-//RabbitMQ Connection (Running on Docker Port: 15732, AMQP PORTOCAL)
+//RabbitMQ Connection (Running on Docker Port: 5732, AMQP PORTOCAL)
 const connectToRabbitMQ = async() => {
 try{ 
     //Connection: we make connection to the server running at port 5672
@@ -63,7 +78,6 @@ catch(error) {
   
 }
 
-
 //Nodemailer function (Send Otp)
 
 const sendVerificationOTP = async(to, userId) => {
@@ -83,7 +97,6 @@ const sendVerificationOTP = async(to, userId) => {
         console.log(otp);
         const otpExpiry = new Date();
         otpExpiry.setMinutes(otpExpiry.getMinutes() + 5) //valid for 5 minutes
-        console.log(otpExpiry);
 
         //update user document with otp and otp expiry time
         await User.findByIdAndUpdate(userId, { otp, otpExpiry });
@@ -104,12 +117,6 @@ const sendVerificationOTP = async(to, userId) => {
 
 }
 
-
-
-
-
-
-
 app.get('/', async(req,res)=> {
 
     const allBlogs = await Blog.find({}).sort("createdAt");
@@ -120,9 +127,6 @@ app.get('/', async(req,res)=> {
     }); 
 } )
 
-
-
-app.use('/user', UserRoute);
 
 
 connectToRabbitMQ().catch(error => console.error('Error connecting to RabbitMQ:', error));
