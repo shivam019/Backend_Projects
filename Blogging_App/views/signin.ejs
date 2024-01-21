@@ -1,35 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <%- include('./partials/head') %>
- <title> Login Page | Blogify</title>
-  </head>
-  <body>
+    <title>Login Page | Blogify</title>
+</head>
+<body>
     <%- include('./partials/nav') %>
 
     <div class="container mt-4">
-        <form action="/user/signin" method="post">
-            
+        <form action="/user/signin" method="post" onsubmit="getLocation(event)">
             <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" placeholder="Enter email">
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
 
-              <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
             </div>
-          
+
+            <input type="hidden" id="latitude" name="latitude" value="">
+            <input type="hidden" id="longitude" name="longitude" value="">
+
             <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-
-
+        </form>
     </div>
 
     <%- include('./partials/googlebtn') %>
-    
+
     <%- include('./partials/script') %>
 
-  </body>
+    <script>
+        function getLocation(event) {
+            event.preventDefault(); 
+
+            if (navigator.geolocation) {
+              
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    document.getElementById("latitude").value = latitude;
+                    document.getElementById("longitude").value = longitude;
+                    event.target.submit();
+                }, function(error) {
+                    console.error("Error getting location:", error);
+                    event.target.submit();
+                });
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+                // If geolocation is not supported, you may still want to submit the form without location
+                event.target.submit();
+            }
+        }
+    </script>
+</body>
 </html>
