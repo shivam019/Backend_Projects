@@ -1,0 +1,27 @@
+
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <p>Active Users: <%= activeUsersCount %></p>
+
+    <p>Total Blogs: <%= totalBlogsCount %></p>
+
+    <h2>Blogs Per User:</h2>
+    <ul>
+        <% users.forEach(user => { %>
+            <li><%= user.fullName %>: <%= user.blogCount %></li>
+        <% }); %>
+    </ul>
+
+    <h2>Trending Blogs:</h2>
+    <ul>
+        <% trendingBlogs.forEach(blog => { %>
+            <li><%= blog.title %></li>
+        <% }); %>
+    </ul>
+</body>
+</html>
