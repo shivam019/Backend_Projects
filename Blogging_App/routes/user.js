@@ -26,9 +26,9 @@ async function(accessToken, refreshToken, profile, done) {
     try{
 
         const user = await User.findOne({ googleId: profile.id });
-         console.log('test 1', user);
+        const { id, displayName} = profile;
 
-         const { id, displayName} = profile;
+         if(!user) {
 
             await User.create({
                 googleId: id,
@@ -37,8 +37,7 @@ async function(accessToken, refreshToken, profile, done) {
 
             });
 
-    
-        console.log('test 2', user);
+         }
 
        return done(null, user);
     }
@@ -72,7 +71,6 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/user/signin' }),
     function (req, res) {
-        console.log("callback fn");
         res.render('dashboard', {
             user: req.body,
         });
