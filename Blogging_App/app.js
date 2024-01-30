@@ -38,17 +38,35 @@ mongoose
 .then( ()=> console.log("MongoDB Connected"));
 
 
-
-
- 
-
 const UserRoute = require("./routes/user");
 const BlogRoute = require("./routes/blog");
 app.use('/user', UserRoute);
 app.use('/blog', BlogRoute)
 
 app.set('view engine', 'ejs');
-app.set("views", path.resolve("./views"))
+app.set("views", path.resolve("./views")
+)
+
+
+socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+});
+
+// Listen for new blog posts
+const listenForNewBlogPosts = () => {
+  const changeStream = BlogPost.watch();
+
+  changeStream.on('change', (change) => {
+    if (change.operationType === 'insert') {
+      const newBlogPost = change.fullDocument;
+      io.emit('newBlogPost', newBlogPost);
+    }
+  });
+};
+
+// Start listening for new blog posts
+listenForNewBlogPosts();
 
 //RabbitMQ Connection (Running on Docker Port: 5732, AMQP PORTOCAL)
 const connectToRabbitMQ = async() => {
@@ -126,6 +144,8 @@ app.get('/', async(req,res)=> {
         blogs: allBlogs,
     }); 
 } )
+
+
 
 
 
